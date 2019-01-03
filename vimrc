@@ -45,7 +45,7 @@ set number
 inore jj <Esc>
 colorscheme gruvbox
 set background=dark
-let g:gruvbox_contrast_dark='hard'
+let g:gruvbox_contrast_dark='soft'
 let solarized_termcolors=256
 let g:gruvbox_termcolors=256
 set nowrap                      " don't wrap lines
@@ -68,8 +68,8 @@ set encoding=utf-8
 set showmatch
 set nocompatible
 "
-let mapleader = " "
-let g:mapleader = " "
+let mapleader = ","
+let g:mapleader = ","
 
 map <C-s> <esc>:wall<cr>
 imap <C-s> <esc>:wall<cr>
@@ -138,30 +138,9 @@ map <F5> <Esc>:w<CR>:!clear;python %<CR>
 " CtrlP ------------------------------
 
 " file finder mapping
-let g:ctrlp_map = ',q'
-" tags (symbols) in current file finder mapping
-nmap ,g :CtrlPBufTag<CR>
-" tags (symbols) in all files finder mapping
-nmap ,G :CtrlPBufTagAll<CR>
+let g:ctrlp_map = ',f'
 " general code finder in all files mapping
-nmap ,f :CtrlPLine<CR>
-" recent files finder mapping
-nmap ,m :CtrlPMRUFiles<CR>
-" commands finder mapping
-nmap ,c :CtrlPCmdPalette<CR>
-" to be able to call CtrlP with default search text
-function! CtrlPWithSearchText(search_text, ctrlp_command_end)
-    execute ':CtrlP' . a:ctrlp_command_end
-    call feedkeys(a:search_text)
-endfunction
 " same as previous mappings, but calling with current word as default text
-nmap ,wg :call CtrlPWithSearchText(expand('<cword>'), 'BufTag')<CR>
-nmap ,wG :call CtrlPWithSearchText(expand('<cword>'), 'BufTagAll')<CR>
-nmap ,wf :call CtrlPWithSearchText(expand('<cword>'), 'Line')<CR>
-nmap ,we :call CtrlPWithSearchText(expand('<cword>'), '')<CR>
-nmap ,pe :call CtrlPWithSearchText(expand('<cfile>'), '')<CR>
-nmap ,wm :call CtrlPWithSearchText(expand('<cword>'), 'MRUFiles')<CR>
-nmap ,wc :call CtrlPWithSearchText(expand('<cword>'), 'CmdPalette')<CR>
 " don't change working directory
 let g:ctrlp_working_path_mode = 'ra'
 " ignore these files and folders on file finder
@@ -210,8 +189,9 @@ nmap  -  <Plug>(choosewin)
 "inoremap <A-j> <Down>
 "inoremap <A-k> <Up>
 "inowremap <A-l> <Right>
-noremap! <A-h> <left><cr>   "move cursor left
-noremap! <A-j> <down>   "move cursor down
+noremap! <A-h> <left>i   "move cursor left
+noremap! <A-j> <C-o>j<cr>   "move cursor down
+inoremap <A-j> <C-o>j
 noremap! <A-k> <up>     "move cursor up   
 noremap! <A-l> <right>  "move cursor right
 noremap! <A-w> <esc>wi  "move one word forward
@@ -219,10 +199,9 @@ noremap! <A-e> <esc>ei  "move forward to the end of word
 noremap! <A-b> <esc>bi  "move one word backward
 
 "cursor settings
-autocmd InsertEnter * set cul
-autocmd InsertLeave * set cul
-
+set cursorline
+hi CursorLine term=bold cterm=bold guibg=Grey40
+set cursorcolumn
 let &t_SI.="\e[5 q"
 let &t_SR.="\e[4 q"
 let &t_EI.="\e[1 q"
-
